@@ -1,0 +1,14 @@
+---
+apiVersion: "idp.cardlytics.com/v1"
+kind: "Team"
+metadata:
+  name: "l2c-team"
+  description: null
+spec:
+  displayName: "L2c Team"
+  email: "l2c@cardlytics.com"
+  slack: null
+  oncall: null
+  productDomain: null
+  costCenter: null
+  owners: []
