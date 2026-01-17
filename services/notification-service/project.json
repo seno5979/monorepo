@@ -1,0 +1,22 @@
+{
+  "name": "notification-service",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "sourceRoot": "services/notification-service/src",
+  "targets": {
+    "build": {
+      "executor": "@nx/gradle:build"
+    },
+    "test": {
+      "executor": "@nx/gradle:test"
+    },
+    "docker-build": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "docker build -t notification-service:latest -f services/notification-service/Dockerfile ."
+      }
+    }
+  },
+  "tags": ["type:service", "scope:backend", "team:seno-platform"],
+  "implicitDependencies": ["shared-lib"]
+}
