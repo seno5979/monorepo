@@ -1,0 +1,16 @@
+---
+apiVersion: "idp.cardlytics.com/v1"
+kind: "DatabricksApp"
+metadata:
+  name: "mlr"
+  team: "l2c-team"
+  description: "MLR Report Generation"
+  labels:
+    tier: "infrastructure"
+  links:
+  - title: "GitHub Repository"
+    url: "https://github.com/cardlytics/l2c-team"
+    icon: "github"
+spec:
+  type: "databricksapp"
+  dependencies: []
