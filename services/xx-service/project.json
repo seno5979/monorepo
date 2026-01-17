@@ -1,0 +1,34 @@
+{
+  "name" : "xx-service",
+  "$schema" : "../../node_modules/nx/schemas/project-schema.json",
+  "projectType" : "application",
+  "sourceRoot" : "services/xx-service/src",
+  "targets" : {
+    "build" : {
+      "executor" : "@nx/gradle:build",
+      "options" : {
+        "outputPath" : "dist/services/xx-service"
+      }
+    },
+    "test" : {
+      "executor" : "@nx/gradle:test"
+    },
+    "lint" : {
+      "executor" : "@nx/linter:eslint"
+    },
+    "docker-build" : {
+      "executor" : "nx:run-commands",
+      "options" : {
+        "command" : "docker build -t xx-service:latest -f services/xx-service/Dockerfile ."
+      }
+    },
+    "deploy" : {
+      "executor" : "nx:run-commands",
+      "dependsOn" : [ "build", "docker-build" ],
+      "options" : {
+        "command" : "helm upgrade --install xx-service ./helm/xx-service"
+      }
+    }
+  },
+  "tags" : [ "type:service", "scope:backend", "team:ads-team", "tier:backend" ]
+}

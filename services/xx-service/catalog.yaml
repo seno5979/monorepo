@@ -1,0 +1,26 @@
+---
+apiVersion: "idp.cardlytics.com/v1"
+kind: "K8sService"
+metadata:
+  name: "xx-service"
+  team: "ads-team"
+  description: "xxx"
+  labels:
+    tier: "backend"
+  links:
+  - title: "GitHub Repository"
+    url: "https://github.com/cardlytics/ads-team"
+    icon: "github"
+spec:
+  environmentFiles: true
+  type: "k8s-service"
+  runtime:
+    framework: "spring-boot"
+    buildTool: "gradle"
+  ports:
+  - name: "http"
+    port: 8080
+  healthCheck:
+    path: "/actuator/health"
+    port: 8080
+  dependencies: []
