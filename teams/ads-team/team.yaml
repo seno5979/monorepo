@@ -1,0 +1,15 @@
+---
+apiVersion: "idp.cardlytics.com/v1"
+kind: "Team"
+metadata:
+  name: "ads-team"
+  description: null
+spec:
+  displayName: "Ads Team"
+  email: "ads@darslytics.com"
+  slack: null
+  oncall: null
+  productDomain: null
+  costCenter: null
+  owners:
+  - "Joe"
