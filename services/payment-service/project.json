@@ -1,0 +1,35 @@
+{
+  "name": "payment-service",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "sourceRoot": "services/payment-service/src",
+  "targets": {
+    "build": {
+      "executor": "@nx/gradle:build",
+      "options": {
+        "outputPath": "dist/services/payment-service"
+      }
+    },
+    "test": {
+      "executor": "@nx/gradle:test"
+    },
+    "lint": {
+      "executor": "@nx/linter:eslint"
+    },
+    "docker-build": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "docker build -t payment-service:latest -f services/payment-service/Dockerfile ."
+      }
+    },
+    "deploy": {
+      "executor": "nx:run-commands",
+      "dependsOn": ["build", "docker-build"],
+      "options": {
+        "command": "helm upgrade --install payment-service ./helm/payment-service"
+      }
+    }
+  },
+  "tags": ["type:service", "scope:backend", "team:seno-platform"],
+  "implicitDependencies": ["shared-lib", "payment-lib"]
+}
