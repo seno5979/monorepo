@@ -1,0 +1,15 @@
+---
+apiVersion: "idp.cardlytics.com/v1"
+kind: "Team"
+metadata:
+  name: "publisher-team"
+  description: null
+spec:
+  displayName: "Publisher Team"
+  email: "publisher@cardlytics.com"
+  slack: null
+  oncall: null
+  productDomain: null
+  costCenter: null
+  owners:
+  - "Ted"
