@@ -1,0 +1,20 @@
+apiVersion: idp.cardlytics.com/v1
+kind: Team
+metadata:
+  name: seno-platform
+  description: Demo monorepo for IDP showcase
+spec:
+  displayName: Seno Platform
+  email: seno@example.com
+  slack: "#seno-platform"
+  oncall: seno-platform-oncall
+  productDomain: demo
+  costCenter: engineering
+  owners:
+    - name: Seno Setiadi
+      email: seno@example.com
+      role: Tech Lead
+  repositories:
+    - name: monorepo
+      url: https://github.com/seno5979/monorepo
+      type: primary
