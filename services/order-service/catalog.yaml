@@ -1,0 +1,88 @@
+apiVersion: idp.cardlytics.com/v1
+kind: K8sService
+metadata:
+  name: order-service
+  team: seno-platform
+  description: Order management and fulfillment service
+  labels:
+    tier: backend
+    criticality: high
+    domain: orders
+  links:
+    - title: GitHub Repository
+      url: https://github.com/seno5979/monorepo
+      icon: github
+    - title: Runbook
+      url: https://wiki.example.com/order-service-runbook
+      icon: docs
+spec:
+  type: k8s-service
+  runtime:
+    framework: spring-boot
+    version: "3.4"
+    buildTool: gradle
+  ports:
+    - name: http
+      port: 8080
+  resources:
+    cpu: "500m"
+    memory: "1Gi"
+    cpuLimit: "2000m"
+    memoryLimit: "2Gi"
+  scaling:
+    minReplicas: 3
+    maxReplicas: 15
+    targetCpuUtilization: 65
+  healthCheck:
+    path: /actuator/health
+    port: 8080
+    initialDelaySeconds: 60
+    periodSeconds: 10
+  networking:
+    ingress:
+      enabled: true
+      className: alb
+      hosts:
+        - host: order-service.dev.example.io
+          paths:
+            - path: /
+              pathType: Prefix
+        - host: order-service.prod.example.io
+          paths:
+            - path: /
+              pathType: Prefix
+    dnsRecords:
+      - name: order-service.dev.example.io
+        type: CNAME
+        target: internal-k8s-dev-alb-123456789.us-east-1.elb.amazonaws.com
+        environment: dev
+      - name: order-service.prod.example.io
+        type: CNAME
+        target: internal-k8s-prod-alb-987654321.us-east-1.elb.amazonaws.com
+        environment: prod
+    loadBalancer:
+      type: ALB
+      scheme: internal
+  dependencies:
+    - name: order-database
+      type: DATABASE
+      description: PostgreSQL for order data
+    - name: payment-service
+      type: SERVICE
+      description: Process payments for orders
+    - name: notification-service
+      type: SERVICE
+      description: Send order confirmations
+    - name: inventory-cache
+      type: CACHE
+      description: Redis for inventory availability
+  environments:
+    dev:
+      replicas: 1
+      env:
+        SPRING_PROFILES_ACTIVE: dev
+        LOG_LEVEL: DEBUG
+    prod:
+      replicas: 3
+      env:
+        SPRING_PROFILES_ACTIVE: prod
