@@ -1,0 +1,22 @@
+{
+  "name": "order-service",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "sourceRoot": "services/order-service/src",
+  "targets": {
+    "build": {
+      "executor": "@nx/gradle:build"
+    },
+    "test": {
+      "executor": "@nx/gradle:test"
+    },
+    "docker-build": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "docker build -t order-service:latest -f services/order-service/Dockerfile ."
+      }
+    }
+  },
+  "tags": ["type:service", "scope:backend", "team:seno-platform"],
+  "implicitDependencies": ["shared-lib", "payment-lib"]
+}
