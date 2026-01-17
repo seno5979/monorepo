@@ -1,0 +1,16 @@
+{
+  "name": "payment-lib",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "libs/payment-lib/src",
+  "targets": {
+    "build": {
+      "executor": "@nx/gradle:build"
+    },
+    "test": {
+      "executor": "@nx/gradle:test"
+    }
+  },
+  "tags": ["type:lib", "scope:payments"],
+  "implicitDependencies": ["shared-lib"]
+}
