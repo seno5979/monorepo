@@ -1,0 +1,73 @@
+apiVersion: idp.cardlytics.com/v1
+kind: K8sService
+metadata:
+  name: notification-service
+  team: seno-platform
+  description: Email, SMS, and push notification delivery service
+  labels:
+    tier: backend
+    criticality: medium
+    domain: notifications
+  links:
+    - title: GitHub Repository
+      url: https://github.com/seno5979/monorepo
+      icon: github
+spec:
+  type: k8s-service
+  runtime:
+    framework: spring-boot
+    version: "3.4"
+    buildTool: gradle
+  ports:
+    - name: http
+      port: 8080
+  resources:
+    cpu: "250m"
+    memory: "512Mi"
+    cpuLimit: "1000m"
+    memoryLimit: "1Gi"
+  scaling:
+    minReplicas: 2
+    maxReplicas: 8
+    targetCpuUtilization: 75
+  healthCheck:
+    path: /actuator/health
+    port: 8080
+    initialDelaySeconds: 45
+    periodSeconds: 10
+  networking:
+    ingress:
+      enabled: true
+      className: alb
+      hosts:
+        - host: notification-service.dev.example.io
+          paths:
+            - path: /
+              pathType: Prefix
+    dnsRecords:
+      - name: notification-service.dev.example.io
+        type: CNAME
+        target: internal-k8s-dev-alb-123456789.us-east-1.elb.amazonaws.com
+        environment: dev
+    loadBalancer:
+      type: ALB
+      scheme: internal
+  dependencies:
+    - name: notification-database
+      type: DATABASE
+      description: PostgreSQL for notification history
+    - name: aws-ses
+      type: SERVICE
+      description: AWS SES for email delivery
+    - name: aws-sns
+      type: SERVICE
+      description: AWS SNS for SMS and push notifications
+  environments:
+    dev:
+      replicas: 1
+      env:
+        SPRING_PROFILES_ACTIVE: dev
+    prod:
+      replicas: 2
+      env:
+        SPRING_PROFILES_ACTIVE: prod
