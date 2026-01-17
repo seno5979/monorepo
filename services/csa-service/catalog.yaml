@@ -42,3 +42,31 @@ spec:
     prod:
       replicas: 2
       env: {}
+  env:
+    joe: "malone"
+    jane: "doe"
+  probes:
+    liveness:
+      httpGet:
+        path: "/health"
+        port: 8080
+      initialDelaySeconds: 60
+    readiness:
+      httpGet:
+        path: "/health"
+        port: 8080
+      initialDelaySeconds: 30
+  serviceAccount:
+    create: true
+  podDisruptionBudget:
+    minAvailable: "1"
+  securityContext:
+    runAsNonRoot: true
+    runAsUser: 1000
+    fsGroup: 1000
+    containerSecurityContext:
+      readOnlyRootFilesystem: true
+      allowPrivilegeEscalation: false
+      capabilities:
+        drop:
+        - "ALL"
