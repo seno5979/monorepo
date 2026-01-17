@@ -1,0 +1,95 @@
+apiVersion: idp.cardlytics.com/v1
+kind: K8sService
+metadata:
+  name: payment-service
+  team: seno-platform
+  description: Payment processing and transaction management service
+  labels:
+    tier: backend
+    criticality: high
+    domain: payments
+  links:
+    - title: GitHub Repository
+      url: https://github.com/seno5979/monorepo
+      icon: github
+    - title: API Documentation
+      url: https://docs.example.com/payment-service
+      icon: docs
+spec:
+  type: k8s-service
+  runtime:
+    framework: spring-boot
+    version: "3.4"
+    buildTool: gradle
+  ports:
+    - name: http
+      port: 8080
+  resources:
+    cpu: "500m"
+    memory: "1Gi"
+    cpuLimit: "2000m"
+    memoryLimit: "2Gi"
+  scaling:
+    minReplicas: 2
+    maxReplicas: 10
+    targetCpuUtilization: 70
+  healthCheck:
+    path: /actuator/health
+    port: 8080
+    initialDelaySeconds: 60
+    periodSeconds: 10
+  networking:
+    ingress:
+      enabled: true
+      className: alb
+      annotations:
+        alb.ingress.kubernetes.io/scheme: internal
+        alb.ingress.kubernetes.io/target-type: ip
+        alb.ingress.kubernetes.io/healthcheck-path: /actuator/health
+      hosts:
+        - host: payment-service.dev.example.io
+          paths:
+            - path: /
+              pathType: Prefix
+        - host: payment-service.prod.example.io
+          paths:
+            - path: /
+              pathType: Prefix
+    dnsRecords:
+      - name: payment-service.dev.example.io
+        type: CNAME
+        target: internal-k8s-dev-alb-123456789.us-east-1.elb.amazonaws.com
+        environment: dev
+      - name: payment-service.prod.example.io
+        type: CNAME
+        target: internal-k8s-prod-alb-987654321.us-east-1.elb.amazonaws.com
+        environment: prod
+    loadBalancer:
+      type: ALB
+      scheme: internal
+      arn: arn:aws:elasticloadbalancing:us-east-1:123456789012:loadbalancer/app/k8s-dev-alb/abc123def456
+  dependencies:
+    - name: payment-database
+      type: DATABASE
+      description: PostgreSQL database for payment transactions
+    - name: redis-cache
+      type: CACHE
+      description: Redis for payment session caching
+    - name: notification-service
+      type: SERVICE
+      description: Service for sending payment notifications
+  environments:
+    dev:
+      replicas: 1
+      env:
+        SPRING_PROFILES_ACTIVE: dev
+        LOG_LEVEL: DEBUG
+    prod:
+      replicas: 3
+      resources:
+        cpu: "1000m"
+        memory: "2Gi"
+        cpuLimit: "4000m"
+        memoryLimit: "4Gi"
+      env:
+        SPRING_PROFILES_ACTIVE: prod
