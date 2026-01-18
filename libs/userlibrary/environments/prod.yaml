@@ -1,0 +1,8 @@
+---
+apiVersion: "idp.cardlytics.com/v1"
+kind: "EnvironmentConfig"
+metadata:
+  name: "userlibrary"
+  environment: "prod"
+spec:
+  replicas: 3
