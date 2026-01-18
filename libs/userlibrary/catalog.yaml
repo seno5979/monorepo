@@ -1,0 +1,19 @@
+---
+apiVersion: "idp.cardlytics.com/v1"
+kind: "Library"
+metadata:
+  name: "userlibrary"
+  team: "publisher-team"
+  description: null
+  labels:
+    tier: "shared"
+  links:
+  - title: "GitHub Repository"
+    url: "https://github.com/cardlytics/publisher-team"
+    icon: "github"
+spec:
+  environmentFiles: true
+  type: "library"
+  language: "python"
+  publishTo: "pypi"
+  sourcePath: "lib/userLibrary"
