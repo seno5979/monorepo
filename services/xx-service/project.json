@@ -31,5 +31,5 @@
     }
   },
   "tags" : [ "type:service", "scope:backend", "team:ads-team", "tier:backend" ],
-  "implicitDependencies" : [ "reporting-service" ]
+  "implicitDependencies" : [ "reporting-service", "userlibrary" ]
 }
