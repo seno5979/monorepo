@@ -42,3 +42,4 @@ spec:
     prod:
       replicas: 1
       env: {}
+  environmentFiles: true
