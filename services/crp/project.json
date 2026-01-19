@@ -30,5 +30,6 @@
       }
     }
   },
-  "tags" : [ "type:service", "scope:backend", "team:publisher-team", "tier:backend" ]
+  "tags" : [ "type:service", "scope:backend", "team:publisher-team", "tier:backend" ],
+  "implicitDependencies" : [ "user-service" ]
 }
