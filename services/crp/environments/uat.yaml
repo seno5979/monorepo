@@ -1,8 +1,0 @@
----
-apiVersion: "idp.cardlytics.com/v1"
-kind: "EnvironmentConfig"
-metadata:
-  name: "crp"
-  environment: "uat"
-spec:
-  replicas: 2
