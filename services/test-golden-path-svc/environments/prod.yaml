@@ -1,0 +1,11 @@
+---
+apiVersion: "idp.cardlytics.com/v1"
+kind: "EnvironmentConfig"
+metadata:
+  name: "test-golden-path-svc"
+  environment: "prod"
+spec:
+  replicas: 3
+  resources:
+    cpu: "500m"
+    memory: "1Gi"
