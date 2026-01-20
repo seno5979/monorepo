@@ -1,0 +1,8 @@
+apiVersion: v2
+name: test-golden-path-svc
+description: Test service with golden path
+type: application
+version: 1.0.0
+appVersion: "1.0.0"
+maintainers:
+  - name: platform
