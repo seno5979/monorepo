@@ -1,0 +1,13 @@
+---
+apiVersion: "idp.cardlytics.com/v1"
+kind: "K8sService"
+metadata:
+  name: "test-golden-path-svc"
+  team: "platform"
+  description: "Test service with golden path"
+  labels: {}
+  links: []
+spec:
+  runtime:
+    framework: "spring-boot"
+    version: "3.4"
