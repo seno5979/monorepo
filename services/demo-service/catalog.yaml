@@ -1,0 +1,19 @@
+---
+apiVersion: "idp.cardlytics.com/v1"
+kind: "K8sService"
+metadata:
+  name: "demo-service"
+  team: "l2c-team"
+  description: "demo service"
+  labels:
+    golden-path: "true"
+    runtime: "kotlin_gradle"
+  links: []
+spec:
+  runtime:
+    framework: "spring-boot"
+    version: "3.4"
+  goldenPath:
+    useNx: true
+    useSonarQube: true
+    useSnyk: true

@@ -1,0 +1,34 @@
+{
+  "name" : "demo-service",
+  "$schema" : "../../node_modules/nx/schemas/project-schema.json",
+  "projectType" : "application",
+  "sourceRoot" : "services/demo-service/src",
+  "targets" : {
+    "build" : {
+      "executor" : "@nx/gradle:build",
+      "options" : {
+        "outputPath" : "dist/services/demo-service"
+      }
+    },
+    "test" : {
+      "executor" : "@nx/gradle:test"
+    },
+    "lint" : {
+      "executor" : "@nx/linter:eslint"
+    },
+    "docker-build" : {
+      "executor" : "nx:run-commands",
+      "options" : {
+        "command" : "docker build -t demo-service:latest -f services/demo-service/Dockerfile ."
+      }
+    },
+    "deploy" : {
+      "executor" : "nx:run-commands",
+      "dependsOn" : [ "build", "docker-build" ],
+      "options" : {
+        "command" : "helm upgrade --install demo-service ./helm/demo-service"
+      }
+    }
+  },
+  "tags" : [ "type:service", "scope:backend", "team:l2c-team", "golden-path:true", "runtime:kotlin_gradle" ]
+}
