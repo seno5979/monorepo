@@ -13,3 +13,4 @@ spec:
   runtime:
     framework: "spring-boot"
     version: "3.4"
+  environmentFiles: true
