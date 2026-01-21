@@ -1,0 +1,11 @@
+---
+apiVersion: "idp.cardlytics.com/v1"
+kind: "EnvironmentConfig"
+metadata:
+  name: "tvc-service"
+  environment: "uat"
+spec:
+  replicas: 2
+  resources:
+    cpu: "250m"
+    memory: "512Mi"
