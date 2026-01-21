@@ -1,11 +1,26 @@
 ---
-apiVersion: "idp.cardlytics.com/v1"
-kind: "EnvironmentConfig"
-metadata:
-  name: "tvc-service"
-  environment: "dev"
-spec:
-  replicas: 1
-  resources:
-    cpu: "250m"
-    memory: "512Mi"
+replicas: 2
+resources:
+  cpu: "250m"
+  memory: "512Mi"
+  cpuLimit: "1000m"
+  memoryLimit: "1Gi"
+envVars:
+  AAA: "bb"
+probes:
+  liveness:
+    httpGet:
+      path: "/health/live"
+      port: 8080
+    initialDelaySeconds: 30
+    periodSeconds: 10
+    timeoutSeconds: 5
+    failureThreshold: 3
+  readiness:
+    httpGet:
+      path: "/health/ready"
+      port: 8080
+    initialDelaySeconds: 10
+    periodSeconds: 5
+    timeoutSeconds: 3
+    failureThreshold: 3
