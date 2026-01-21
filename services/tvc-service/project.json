@@ -30,5 +30,6 @@
       }
     }
   },
-  "tags" : [ "type:service", "scope:backend", "team:publisher-team", "golden-path:true", "runtime:kotlin_gradle" ]
+  "tags" : [ "type:service", "scope:backend", "team:publisher-team", "golden-path:true", "runtime:kotlin_gradle" ],
+  "implicitDependencies" : [ "userlibrary" ]
 }
