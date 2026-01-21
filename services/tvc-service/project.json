@@ -1,0 +1,34 @@
+{
+  "name" : "tvc-service",
+  "$schema" : "../../node_modules/nx/schemas/project-schema.json",
+  "projectType" : "application",
+  "sourceRoot" : "services/tvc-service/src",
+  "targets" : {
+    "build" : {
+      "executor" : "@nx/gradle:build",
+      "options" : {
+        "outputPath" : "dist/services/tvc-service"
+      }
+    },
+    "test" : {
+      "executor" : "@nx/gradle:test"
+    },
+    "lint" : {
+      "executor" : "@nx/linter:eslint"
+    },
+    "docker-build" : {
+      "executor" : "nx:run-commands",
+      "options" : {
+        "command" : "docker build -t tvc-service:latest -f services/tvc-service/Dockerfile ."
+      }
+    },
+    "deploy" : {
+      "executor" : "nx:run-commands",
+      "dependsOn" : [ "build", "docker-build" ],
+      "options" : {
+        "command" : "helm upgrade --install tvc-service ./helm/tvc-service"
+      }
+    }
+  },
+  "tags" : [ "type:service", "scope:backend", "team:publisher-team", "golden-path:true", "runtime:kotlin_gradle" ]
+}
