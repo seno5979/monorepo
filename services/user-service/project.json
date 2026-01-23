@@ -2,5 +2,33 @@
   "name" : "user-service",
   "$schema" : "../../node_modules/nx/schemas/project-schema.json",
   "projectType" : "application",
-  "implicitDependencies" : [ "userlibrary" ]
+  "sourceRoot" : "services/user-service/src",
+  "targets" : {
+    "build" : {
+      "executor" : "@nx/gradle:build",
+      "options" : {
+        "outputPath" : "dist/services/user-service"
+      }
+    },
+    "test" : {
+      "executor" : "@nx/gradle:test"
+    },
+    "lint" : {
+      "executor" : "@nx/linter:eslint"
+    },
+    "docker-build" : {
+      "executor" : "nx:run-commands",
+      "options" : {
+        "command" : "docker build -t user-service:latest -f services/user-service/Dockerfile ."
+      }
+    },
+    "deploy" : {
+      "executor" : "nx:run-commands",
+      "dependsOn" : [ "build", "docker-build" ],
+      "options" : {
+        "command" : "helm upgrade --install user-service ./helm/user-service"
+      }
+    }
+  },
+  "tags" : [ "type:service", "scope:backend", "team:publisher-team", "tier:backend" ]
 }
