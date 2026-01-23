@@ -3,42 +3,24 @@ apiVersion: "idp.cardlytics.com/v1"
 kind: "K8sService"
 metadata:
   name: "user-service"
-  team: "seno-platform"
-  description: "xxx"
+  team: "publisher-team"
+  description: null
   labels:
     tier: "backend"
   links:
   - title: "GitHub Repository"
-    url: "https://github.com/cardlytics/seno-platform"
+    url: "https://github.com/cardlytics/publisher-team"
     icon: "github"
 spec:
+  environmentFiles: true
   type: "k8s-service"
   runtime:
-    framework: "node"
-    buildTool: "npm"
+    framework: "spring-boot"
+    buildTool: "gradle"
   ports:
   - name: "http"
     port: 8080
-  resources:
-    cpu: "250m"
-    memory: "512Mi"
-    cpuLimit: "1000m"
-    memoryLimit: "1Gi"
-  scaling:
-    minReplicas: 2
-    maxReplicas: 10
-    targetCpuUtilization: 70
   healthCheck:
-    path: "/health"
+    path: "/actuator/health"
     port: 8080
   dependencies: []
-  environments:
-    dev:
-      replicas: 1
-      env: {}
-    uat:
-      replicas: 2
-      env: {}
-    prod:
-      replicas: 2
-      env: {}
