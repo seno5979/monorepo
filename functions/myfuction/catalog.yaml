@@ -1,0 +1,24 @@
+---
+apiVersion: "idp.cardlytics.com/v1"
+kind: "Lambda"
+metadata:
+  name: "myfuction"
+  team: "publisher-team"
+  description: null
+  labels:
+    tier: "infrastructure"
+  links:
+  - title: "GitHub Repository"
+    url: "https://github.com/cardlytics/publisher-team"
+    icon: "github"
+spec:
+  environmentFiles: true
+  type: "lambda"
+  runtime:
+    language: "python3.12"
+    architecture: "arm64"
+  handler: "handler.main"
+  memorySize: 256
+  timeout: 30
+  triggers: []
+  dependencies: []

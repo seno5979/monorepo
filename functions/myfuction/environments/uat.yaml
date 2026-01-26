@@ -1,0 +1,8 @@
+---
+apiVersion: "idp.cardlytics.com/v1"
+kind: "EnvironmentConfig"
+metadata:
+  name: "myfuction"
+  environment: "uat"
+spec:
+  replicas: 2
